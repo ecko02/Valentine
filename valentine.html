@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap');
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1a001a, #000000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.6rem;
+  text-shadow: 0 0 25px #ff4da6;
+}
+
+button {
+  padding: 12px 28px;
+  font-size: 1rem;
+  border: 2px solid #ff4da6;
+  border-radius: 40px;
+  margin: 15px;
+  cursor: pointer;
+  background: transparent;
+  color: #ff4da6;
+  transition: 0.4s;
+}
+
+button:hover {
+  background: #ff4da6;
+  color: black;
+  box-shadow: 0 0 30px #ff4da6;
+}
+
+.no {
+  position: absolute;
+}
+
+.letter {
+  display: none;
+  max-width: 600px;
+  background: rgba(255, 0, 128, 0.08);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.signature {
+  margin-top: 30px;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #ff80bf;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ff4da6;
+  transform: rotate(45deg);
+  animation: float 8s linear infinite;
+  opacity: 0.8;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ff4da6;
+  border-radius: 50%;
+}
+
+.heart::before { top: -9px; left: 0; }
+.heart::after { left: -9px; top: 0; }
+
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  .letter { padding: 25px; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="main">
+  <h1>Will you be my Valentine? 💖</h1>
+  <button onclick="showLetter()">Yes, my love 💕</button>
+  <button class="no" id="noBtn">No 🙈</button>
+</div>
+
+<div class="letter" id="letter">
+  <h2>My Love 💌</h2>
+  <p>
+    In a world full of temporary things, you are my favorite forever.
+    You walked into my life quietly, but you stayed in my heart loudly.
+  </p>
+  <p>
+    You are my comfort, my happiness, and my safest place.
+    With you, even silence feels beautiful.
+  </p>
+  <p>
+    So today, tomorrow, and every day after…
+    I choose you. Again and again. 💖
+  </p>
+  <div class="signature">
+    Love you to the moon and back,<br>
+    From Ecko 💘
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const music = document.getElementById("bgMusic");
+
+// No button runs away
+noBtn.addEventListener("mouseover", function() {
+  noBtn.style.top = Math.random() * window.innerHeight + "px";
+  noBtn.style.left = Math.random() * window.innerWidth + "px";
+});
+
+// Show letter + play music with fade-in
+function showLetter() {
+  document.getElementById("main").style.display = "none";
+  document.getElementById("letter").style.display = "block";
+
+  music.volume = 0;
+  music.play();
+
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 1) {
+      vol += 0.05;
+      music.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 200);
+}
+
+// Floating hearts generator
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
+}, 400);
+</script>
+
+</body>
+</html>
